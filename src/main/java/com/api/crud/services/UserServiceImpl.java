@@ -10,6 +10,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -42,5 +44,13 @@ public class UserServiceImpl implements UserService {
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
+    }
+
+    public Optional<UserModel> findById(UUID id) {
+        return userRepository.findById(id);
+    }
+
+    public void deleteUser(UUID id) {
+        userRepository.deleteById(id);
     }
 }
