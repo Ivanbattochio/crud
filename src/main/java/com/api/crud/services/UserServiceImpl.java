@@ -1,9 +1,9 @@
 package com.api.crud.services;
 
 import com.api.crud.dtos.UserDTO;
-import com.api.crud.view.UserView;
 import com.api.crud.models.UserModel;
 import com.api.crud.repositories.UserRepository;
+import com.api.crud.view.UserView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,5 +38,10 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(userModel, userView);
 
         return userView;
+    }
+
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+
     }
 }

@@ -17,6 +17,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody @Valid UserDTO userDTO) {
+
+        if (userService.existsByEmail(userDTO.getEmail())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already in use!");
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDTO));
     }
 
