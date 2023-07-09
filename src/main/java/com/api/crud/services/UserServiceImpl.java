@@ -1,6 +1,6 @@
 package com.api.crud.services;
 
-import com.api.crud.dtos.UserDTO;
+import com.api.crud.dtos.CreateUserDTO;
 import com.api.crud.models.UserModel;
 import com.api.crud.repositories.UserRepository;
 import com.api.crud.view.UserView;
@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserView createUser(UserDTO user) {
+    public UserView createUser(CreateUserDTO user) {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user, userModel);
         Instant now = Instant.now();
@@ -52,5 +53,9 @@ public class UserServiceImpl implements UserService {
 
     public void deleteUser(UUID id) {
         userRepository.deleteById(id);
+    }
+
+    public List<UserModel> findAll(){
+        return userRepository.findAll();
     }
 }

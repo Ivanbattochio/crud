@@ -9,7 +9,7 @@ import lombok.Data;
 import java.time.Instant;
 
 @Data
-public class UserDTO {
+public class CreateUserDTO {
     @NotBlank
     private String name;
     @NotBlank
