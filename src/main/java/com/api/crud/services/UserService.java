@@ -18,4 +18,6 @@ public interface UserService {
     void deleteUser(UUID id);
 
     List<UserModel> findAll();
+
+    UserModel updateUser(UserModel user);
 }

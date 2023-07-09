@@ -1,6 +1,7 @@
 package com.api.crud.controllers;
 
 import com.api.crud.dtos.CreateUserDTO;
+import com.api.crud.dtos.UpdateUserDTO;
 import com.api.crud.models.UserModel;
 import com.api.crud.services.UserServiceImpl;
 import com.api.crud.view.UserView;
@@ -67,6 +68,20 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserView>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.findAll().stream().map(this::convertToView).collect(Collectors.toList()));
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> updateUser(@RequestBody @Valid UpdateUserDTO userDTO) {
+        Optional<UserModel> optionalUser = userService.findById(userDTO.getId());
+
+        if (optionalUser.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+        }
+
+        UserModel userModel = optionalUser.get();
+        modelMapper.map(userDTO, userModel);
+
+        return ResponseEntity.status(HttpStatus.OK).body(convertToView(userService.updateUser(userModel)));
     }
 
     private UserView convertToView(UserModel user) {

@@ -51,4 +51,9 @@ public class UserServiceImpl implements UserService {
     public List<UserModel> findAll() {
         return userRepository.findAll();
     }
+
+    public UserModel updateUser(UserModel userModel) {
+        userModel.setUpdatedAt(Instant.now());
+        return userRepository.save(userModel);
+    }
 }
