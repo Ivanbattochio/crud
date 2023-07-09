@@ -33,7 +33,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already in use!");
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.createUser(userDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(convertToView(userService.createUser(userDTO)));
     }
 
     @DeleteMapping("/{id}")

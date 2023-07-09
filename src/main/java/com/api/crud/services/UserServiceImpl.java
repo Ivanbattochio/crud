@@ -3,7 +3,6 @@ package com.api.crud.services;
 import com.api.crud.dtos.CreateUserDTO;
 import com.api.crud.models.UserModel;
 import com.api.crud.repositories.UserRepository;
-import com.api.crud.view.UserView;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserView createUser(CreateUserDTO user) {
+    public UserModel createUser(CreateUserDTO user) {
         UserModel userModel = new UserModel();
         BeanUtils.copyProperties(user, userModel);
         Instant now = Instant.now();
@@ -34,13 +33,7 @@ public class UserServiceImpl implements UserService {
         userModel.setCreatedAt(now);
         userModel.setUpdatedAt(now);
 
-        userRepository.save(userModel);
-
-        UserView userView = new UserView();
-
-        BeanUtils.copyProperties(userModel, userView);
-
-        return userView;
+        return userRepository.save(userModel);
     }
 
     public boolean existsByEmail(String email) {
@@ -55,7 +48,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    public List<UserModel> findAll(){
+    public List<UserModel> findAll() {
         return userRepository.findAll();
     }
 }
