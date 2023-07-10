@@ -54,15 +54,15 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<Object> findUser(@PathVariable(value = "id") UUID id) {
 
-        Optional<UserModel> user = userService.findById(id);
+        Optional<UserModel> optionalUser = userService.findById(id);
 
-        if (user.isEmpty()) {
+        if (optionalUser.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
         }
 
-        userService.deleteUser(id);
+        UserModel userModel = optionalUser.get();
 
-        return ResponseEntity.status(HttpStatus.OK).body("");
+        return ResponseEntity.status(HttpStatus.OK).body(convertToView(userModel));
     }
 
     @GetMapping
